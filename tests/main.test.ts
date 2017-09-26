@@ -1,12 +1,12 @@
 declare let jasmine: any, describe: any, expect: any, it: any;
-import {saveJSON, loadJSON, deleteFile} from './../src';
+import {saveJSON, loadJSON, deleteFile, getPath, getFilename} from './../src';
 
 const data: any = {
   name: 'John',
   age: 32,
 };
 
-describe('Internal module test', () => {
+describe.skip('Load Save Delete file', () => {
   it('should delete the file', (done:Function) => {
     deleteFile('test-data.json')
       .then(()=>{
@@ -55,5 +55,15 @@ describe('Internal module test', () => {
         expect(error).toBe(null);
         done();
       }));
+  });
+});
+
+
+describe('path parse', () => {
+  it('should get the path from full file name', () => {
+    expect(getPath('src/feature\\base/myFeature.ts')).toBe('src/feature/base');
+  });
+  it('should get the filename from full file name', () => {
+    expect(getFilename('src/feature\\base/myFeature.ts')).toBe('myFeature.ts');
   });
 });

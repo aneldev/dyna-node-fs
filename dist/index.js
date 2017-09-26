@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("fs"));
+		module.exports = factory(require("fs"), require("path"));
 	else if(typeof define === 'function' && define.amd)
-		define("dyna-node-fs", ["fs"], factory);
+		define("dyna-node-fs", ["fs", "path"], factory);
 	else if(typeof exports === 'object')
-		exports["dyna-node-fs"] = factory(require("fs"));
+		exports["dyna-node-fs"] = factory(require("fs"), require("path"));
 	else
-		root["dyna-node-fs"] = factory(root["fs"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_1__) {
+		root["dyna-node-fs"] = factory(root["fs"], root["path"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_2__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "/dist/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -92,6 +92,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs = __webpack_require__(1);
+const path = __webpack_require__(2);
 exports.loadJSON = (filename) => {
     return new Promise((resolve, reject) => {
         fs.readFile(filename, (error, data) => {
@@ -142,6 +143,33 @@ exports.deleteFile = (filename) => __awaiter(this, void 0, void 0, function* () 
     yield _deleteFile(filename);
     return Promise.resolve(true);
 });
+exports.mkdir = (directory) => {
+    return new Promise((resolve, reject) => {
+        try {
+            const sep = '/'; //path.sep;
+            const initDir = path.isAbsolute(directory) ? sep : '';
+            directory.split(sep).reduce((parentDir, childDir) => {
+                const curDir = path.resolve(parentDir, childDir);
+                if (!fs.existsSync(curDir))
+                    fs.mkdirSync(curDir);
+                return curDir;
+            }, initDir);
+            resolve();
+        }
+        catch (err) {
+            reject(err);
+        }
+    });
+};
+exports.getPath = (fullpath) => {
+    let parts = fullpath.replace(/\\/g, '/').split('/');
+    parts.pop();
+    return parts.join('/');
+};
+exports.getFilename = (fullpath) => {
+    let parts = fullpath.replace(/\\/g, '/').split('/');
+    return parts.reverse()[0];
+};
 
 
 /***/ }),
@@ -152,6 +180,12 @@ module.exports = require("fs");
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports) {
+
+module.exports = require("path");
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(0);

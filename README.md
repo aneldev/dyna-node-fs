@@ -23,3 +23,7 @@ Resolves with boolean is the file exists or not.
 # deleteFile(filename: string): Promise<boolean>
 
 _more commands later_
+
+# mkdir(path: string): Promise<void>
+
+Create a directories recursively.

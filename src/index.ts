@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 
 export const loadJSON = (filename: string): Promise<any> => {
   return new Promise((resolve: Function, reject: (error: NodeJS.ErrnoException) => void) => {
@@ -66,3 +67,33 @@ export const deleteFile = async (filename: string): Promise<boolean> => {
   await _deleteFile(filename);
   return Promise.resolve(true);
 };
+
+
+export const mkdir = (directory: string): Promise<void> => {
+  return new Promise((resolve: Function, reject: Function) => {
+    try {
+      const sep = '/'; //path.sep;
+      const initDir = path.isAbsolute(directory) ? sep : '';
+      directory.split(sep).reduce((parentDir, childDir) => {
+        const curDir = path.resolve(parentDir, childDir);
+        if (!fs.existsSync(curDir)) fs.mkdirSync(curDir);
+        return curDir;
+      }, initDir);
+      resolve();
+    } catch (err) {
+      reject(err);
+    }
+  });
+};
+
+export const getPath = (fullpath: string): string => {
+  let parts: string[] = fullpath.replace(/\\/g, '/').split('/');
+  parts.pop();
+  return parts.join('/');
+};
+
+export const getFilename = (fullpath: string): string => {
+  let parts: string[] = fullpath.replace(/\\/g, '/').split('/');
+  return parts.reverse()[0];
+};
+
