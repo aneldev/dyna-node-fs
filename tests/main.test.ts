@@ -6,9 +6,11 @@ const data: any = {
   age: 32,
 };
 
-describe.skip('Load Save Delete file', () => {
+const tempPath: string = './temp/';
+
+describe('Load Save Delete file', () => {
   it('should delete the file', (done:Function) => {
-    deleteFile('test-data.json')
+    deleteFile(tempPath + 'test-data.json')
       .then(()=>{
         expect(true).toBe(true);
         done();
@@ -20,7 +22,7 @@ describe.skip('Load Save Delete file', () => {
       }));
   });
   it('should save the file', (done:Function) => {
-    saveJSON('test-data.json', data)
+    saveJSON(tempPath + 'test-data.json', data)
       .then(()=>{
         expect(true).toBe(true);
         done();
@@ -32,7 +34,7 @@ describe.skip('Load Save Delete file', () => {
       }));
   });
   it('should load the file', (done:Function) => {
-    loadJSON('test-data.json')
+    loadJSON(tempPath + 'test-data.json')
       .then((loadedData)=>{
         expect(loadedData.name).toBe(data.name);
         expect(loadedData.age).toBe(data.age);
@@ -44,8 +46,8 @@ describe.skip('Load Save Delete file', () => {
         done();
       }));
   });
-  it('should delete the file', (done:Function) => {
-    deleteFile('test-data.json')
+  it.skip('should delete the file', (done: Function) => {
+    deleteFile(tempPath + 'test-data.json')
       .then((deleted: boolean)=>{
         expect(deleted).toBe(true);
         done();
