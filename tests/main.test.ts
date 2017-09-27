@@ -4,6 +4,9 @@ import {saveJSON, loadJSON, deleteFile, getPath, getFilename} from './../src';
 const data: any = {
   name: 'John',
   age: 32,
+  cars: [
+    'WV', 'Volvo', 'Lexus'
+  ],
 };
 
 const tempPath: string = './temp/';
@@ -22,7 +25,7 @@ describe('Load Save Delete file', () => {
       }));
   });
   it('should save the file', (done:Function) => {
-    saveJSON(tempPath + 'test-data.json', data)
+    saveJSON(tempPath + 'test-data.json', data, true)
       .then(()=>{
         expect(true).toBe(true);
         done();
@@ -46,7 +49,7 @@ describe('Load Save Delete file', () => {
         done();
       }));
   });
-  it.skip('should delete the file', (done: Function) => {
+  it('should delete the file', (done: Function) => {
     deleteFile(tempPath + 'test-data.json')
       .then((deleted: boolean)=>{
         expect(deleted).toBe(true);
