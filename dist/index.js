@@ -97,7 +97,12 @@ exports.loadJSON = (filename) => {
     return new Promise((resolve, reject) => {
         fs.readFile(filename, (error, data) => {
             if (error) {
-                reject(error);
+                reject({
+                    code: 1909272047,
+                    section: 'dyna-node-fs/loadJSON',
+                    message: `Cannot load the json file: [${filename}]`,
+                    data: { error },
+                });
             }
             else {
                 resolve(JSON.parse(data.toString()));
@@ -107,13 +112,29 @@ exports.loadJSON = (filename) => {
 };
 exports.saveJSON = (filename, data, humanReadable = false) => {
     return new Promise((resolve, reject) => {
-        fs.writeFile(filename, JSON.stringify(data, null, humanReadable ? 2 : 0), (error) => {
-            if (error) {
-                reject(error);
-            }
-            else {
-                resolve();
-            }
+        exports.mkdir(exports.getPath(filename))
+            .then(() => {
+            fs.writeFile(filename, JSON.stringify(data, null, humanReadable ? 2 : 0), (error) => {
+                if (error) {
+                    reject({
+                        code: 1909272048,
+                        section: 'dyna-node-fs/saveJSON',
+                        message: `Cannot save the json file: [${filename}]`,
+                        data: { error },
+                    });
+                }
+                else {
+                    resolve();
+                }
+            });
+        })
+            .catch((error) => {
+            reject({
+                code: 1909272049,
+                section: 'dyna-node-fs/saveJSON',
+                message: `Cannot create path for file: [${filename}]`,
+                data: { error },
+            });
         });
     });
 };
@@ -128,7 +149,12 @@ const _deleteFile = (filename) => {
     return new Promise((resolve, reject) => {
         fs.unlink(filename, (error) => {
             if (error) {
-                reject(error);
+                reject({
+                    code: 1909272050,
+                    section: 'dyna-node-fs/_deleteFile(internal)',
+                    message: `Cannot delete file: [${filename}]`,
+                    data: { error },
+                });
             }
             else {
                 resolve();
@@ -156,8 +182,13 @@ exports.mkdir = (directory) => {
             }, initDir);
             resolve();
         }
-        catch (err) {
-            reject(err);
+        catch (error) {
+            reject({
+                code: 1909272051,
+                section: 'dyna-node-fs/mkdir',
+                message: `Cannot create directory: [${directory}]`,
+                data: { error },
+            });
         }
     });
 };
