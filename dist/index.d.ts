@@ -1,3 +1,5 @@
+import { IError } from 'dyna-interfaces';
+export { IError };
 export declare const loadJSON: (filename: string) => Promise<any>;
 export declare const saveJSON: (filename: string, data: any, humanReadable?: boolean) => Promise<void>;
 export declare const exists: (filename: string) => Promise<boolean>;
