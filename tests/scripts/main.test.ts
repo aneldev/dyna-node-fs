@@ -1,5 +1,5 @@
 declare let jasmine: any, describe: any, expect: any, it: any;
-import {saveJSON, loadJSON, deleteFile, getPath, getFilename} from './../src';
+import {saveJSON, loadJSON, deleteFile, getPath, getFilename} from './../../src';
 
 const data: any = {
   name: 'John',

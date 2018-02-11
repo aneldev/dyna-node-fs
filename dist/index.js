@@ -90,18 +90,46 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [0, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
-const fs = __webpack_require__(1);
-const path = __webpack_require__(2);
-exports.loadJSON = (filename) => {
-    return new Promise((resolve, reject) => {
-        fs.readFile(filename, (error, data) => {
+var fs = __webpack_require__(1);
+var path = __webpack_require__(2);
+exports.loadJSON = function (filename) {
+    return new Promise(function (resolve, reject) {
+        fs.readFile(filename, function (error, data) {
             if (error) {
                 reject({
                     code: 1909272047,
                     section: 'dyna-node-fs/loadJSON',
-                    message: `Cannot load the json file: [${filename}]`,
-                    data: { error },
+                    message: "Cannot load the json file: [" + filename + "]",
+                    data: { error: error },
                 });
             }
             else {
@@ -110,17 +138,18 @@ exports.loadJSON = (filename) => {
         });
     });
 };
-exports.saveJSON = (filename, data, humanReadable = false) => {
-    return new Promise((resolve, reject) => {
+exports.saveJSON = function (filename, data, humanReadable) {
+    if (humanReadable === void 0) { humanReadable = false; }
+    return new Promise(function (resolve, reject) {
         exports.mkdir(exports.getPath(filename))
-            .then(() => {
-            fs.writeFile(filename, JSON.stringify(data, null, humanReadable ? 2 : 0), (error) => {
+            .then(function () {
+            fs.writeFile(filename, JSON.stringify(data, null, humanReadable ? 2 : 0), function (error) {
                 if (error) {
                     reject({
                         code: 1909272048,
                         section: 'dyna-node-fs/saveJSON',
-                        message: `Cannot save the json file: [${filename}]`,
-                        data: { error },
+                        message: "Cannot save the json file: [" + filename + "]",
+                        data: { error: error },
                     });
                 }
                 else {
@@ -128,32 +157,32 @@ exports.saveJSON = (filename, data, humanReadable = false) => {
                 }
             });
         })
-            .catch((error) => {
+            .catch(function (error) {
             reject({
                 code: 1909272049,
                 section: 'dyna-node-fs/saveJSON',
-                message: `Cannot create path for file: [${filename}]`,
-                data: { error },
+                message: "Cannot create path for file: [" + filename + "]",
+                data: { error: error },
             });
         });
     });
 };
-exports.exists = (filename) => {
-    return new Promise((resolve) => {
-        fs.exists(filename, (exists) => {
+exports.exists = function (filename) {
+    return new Promise(function (resolve) {
+        fs.exists(filename, function (exists) {
             resolve(exists);
         });
     });
 };
-const _deleteFile = (filename) => {
-    return new Promise((resolve, reject) => {
-        fs.unlink(filename, (error) => {
+var _deleteFile = function (filename) {
+    return new Promise(function (resolve, reject) {
+        fs.unlink(filename, function (error) {
             if (error) {
                 reject({
                     code: 1909272050,
                     section: 'dyna-node-fs/_deleteFile(internal)',
-                    message: `Cannot delete file: [${filename}]`,
-                    data: { error },
+                    message: "Cannot delete file: [" + filename + "]",
+                    data: { error: error },
                 });
             }
             else {
@@ -162,20 +191,29 @@ const _deleteFile = (filename) => {
         });
     });
 };
-exports.deleteFile = (filename) => __awaiter(this, void 0, void 0, function* () {
-    const fileExists = yield exports.exists(filename);
-    if (!fileExists)
-        return Promise.resolve(false);
-    yield _deleteFile(filename);
-    return Promise.resolve(true);
-});
-exports.mkdir = (directory) => {
-    return new Promise((resolve, reject) => {
+exports.deleteFile = function (filename) { return __awaiter(_this, void 0, void 0, function () {
+    var fileExists;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, exports.exists(filename)];
+            case 1:
+                fileExists = _a.sent();
+                if (!fileExists)
+                    return [2 /*return*/, Promise.resolve(false)];
+                return [4 /*yield*/, _deleteFile(filename)];
+            case 2:
+                _a.sent();
+                return [2 /*return*/, Promise.resolve(true)];
+        }
+    });
+}); };
+exports.mkdir = function (directory) {
+    return new Promise(function (resolve, reject) {
         try {
-            const sep = '/'; //path.sep;
-            const initDir = path.isAbsolute(directory) ? sep : '';
-            directory.split(sep).reduce((parentDir, childDir) => {
-                const curDir = path.resolve(parentDir, childDir);
+            var sep = '/'; //path.sep;
+            var initDir = path.isAbsolute(directory) ? sep : '';
+            directory.split(sep).reduce(function (parentDir, childDir) {
+                var curDir = path.resolve(parentDir, childDir);
                 if (!fs.existsSync(curDir))
                     fs.mkdirSync(curDir);
                 return curDir;
@@ -186,19 +224,19 @@ exports.mkdir = (directory) => {
             reject({
                 code: 1909272051,
                 section: 'dyna-node-fs/mkdir',
-                message: `Cannot create directory: [${directory}]`,
-                data: { error },
+                message: "Cannot create directory: [" + directory + "]",
+                data: { error: error },
             });
         }
     });
 };
-exports.getPath = (fullpath) => {
-    let parts = fullpath.replace(/\\/g, '/').split('/');
+exports.getPath = function (fullpath) {
+    var parts = fullpath.replace(/\\/g, '/').split('/');
     parts.pop();
     return parts.join('/');
 };
-exports.getFilename = (fullpath) => {
-    let parts = fullpath.replace(/\\/g, '/').split('/');
+exports.getFilename = function (fullpath) {
+    var parts = fullpath.replace(/\\/g, '/').split('/');
     return parts.reverse()[0];
 };
 
@@ -207,13 +245,13 @@ exports.getFilename = (fullpath) => {
 /* 1 */
 /***/ (function(module, exports) {
 
-module.exports = require("fs");
+module.exports = __WEBPACK_EXTERNAL_MODULE_1__;
 
 /***/ }),
 /* 2 */
 /***/ (function(module, exports) {
 
-module.exports = require("path");
+module.exports = __WEBPACK_EXTERNAL_MODULE_2__;
 
 /***/ }),
 /* 3 */
