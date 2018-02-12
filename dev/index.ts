@@ -1,1 +1,3 @@
-console.log('Debug application');
+import {test} from "../src"
+
+alert(test());

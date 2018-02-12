@@ -5,6 +5,10 @@ import {IError} from 'dyna-interfaces';
 
 export {IError};
 
+export const test = (): string => {
+  return 'test';
+};
+
 export const loadJSON = (filename: string): Promise<any> => {
   return new Promise((resolve: Function, reject: (error: IError) => void) => {
     fs.readFile(
