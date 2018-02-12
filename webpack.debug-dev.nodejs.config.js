@@ -18,7 +18,7 @@ const config = {
     // the entry application code
     path.resolve(__dirname, 'dev/index.ts')
   ],
-  externals: [nodeExternals()].concat(['fs', 'path']), // in order to ignore all modules in node_modules folder
+  externals: [nodeExternals()], // in order to ignore all modules in node_modules folder
   output: {
     path: path.resolve(__dirname, 'debug-ground/debug-dev-on-nodejs'),
     filename: 'index.js'

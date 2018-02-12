@@ -121,6 +121,9 @@ var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs = __webpack_require__(1);
 var path = __webpack_require__(2);
+exports.test = function () {
+    return 'test';
+};
 exports.loadJSON = function (filename) {
     return new Promise(function (resolve, reject) {
         fs.readFile(filename, function (error, data) {
