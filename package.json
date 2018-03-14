@@ -76,7 +76,8 @@
     "webpack": "^2.4.1",
     "webpack-bundle-analyzer": "^2.10.0",
     "webpack-dev-middleware": "^1.12.2",
-    "webpack-dev-server": "^2.11.1"
+    "webpack-dev-server": "^2.11.1",
+    "webpack-node-externals": "^1.6.0"
   },
   "jest": {
     "setupTestFrameworkScriptFile": "./tests/setup/testSetup.ts",
