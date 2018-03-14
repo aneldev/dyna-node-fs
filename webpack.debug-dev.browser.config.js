@@ -3,7 +3,6 @@
 const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
-const nodeExternals = require('webpack-node-externals');
 
 const loaders = require('./webpack.loaders');
 const plugins = require('./webpack.plugins');
@@ -17,8 +16,7 @@ const config = {
     // the entry application code
     path.resolve(__dirname, 'dev/index.ts')
   ],
-  //externals: ["fs", "path"].concat([nodeExternals()]),
-  //externals: [nodeExternals()],
+	externals: [],
   output: {
     path: path.resolve(__dirname, 'debug-ground/debug-dev-on-browser'),
     filename: 'debug-dev-browser.js'
