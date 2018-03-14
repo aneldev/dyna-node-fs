@@ -248,13 +248,13 @@ exports.getFilename = function (fullpath) {
 /* 1 */
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_1__;
+module.exports = require("fs");
 
 /***/ }),
 /* 2 */
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_2__;
+module.exports = require("path");
 
 /***/ }),
 /* 3 */

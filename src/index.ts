@@ -125,6 +125,19 @@ export const mkdir = (directory: string): Promise<void> => {
   });
 };
 
+export const isFolderEmpty = (directory: string): Promise<boolean> => {
+  return new Promise<boolean>((resolve: (isEmpty: boolean) => void, reject: (error: any) => void) => {
+    debugger;
+    fs.readdir(directory, function (err: any, files: any[]) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(!!!files.length);
+      }
+    });
+  });
+};
+
 export const getPath = (fullpath: string): string => {
   let parts: string[] = fullpath.replace(/\\/g, '/').split('/');
   parts.pop();
