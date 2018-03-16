@@ -233,6 +233,18 @@ exports.mkdir = function (directory) {
         }
     });
 };
+exports.isFolderEmpty = function (directory) {
+    return new Promise(function (resolve, reject) {
+        fs.readdir(directory, function (err, files) {
+            if (err) {
+                reject(err);
+            }
+            else {
+                resolve(!files.length);
+            }
+        });
+    });
+};
 exports.getPath = function (fullpath) {
     var parts = fullpath.replace(/\\/g, '/').split('/');
     parts.pop();
@@ -248,13 +260,13 @@ exports.getFilename = function (fullpath) {
 /* 1 */
 /***/ (function(module, exports) {
 
-module.exports = require("fs");
+module.exports = __WEBPACK_EXTERNAL_MODULE_1__;
 
 /***/ }),
 /* 2 */
 /***/ (function(module, exports) {
 
-module.exports = require("path");
+module.exports = __WEBPACK_EXTERNAL_MODULE_2__;
 
 /***/ }),
 /* 3 */
