@@ -125,6 +125,8 @@ export const mkdir = (directory: string): Promise<void> => {
   });
 };
 
+
+
 export const isFolderEmpty = (directory: string): Promise<boolean> => {
   return new Promise<boolean>((resolve: (isEmpty: boolean) => void, reject: (error: any) => void) => {
     debugger;

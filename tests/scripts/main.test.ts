@@ -1,6 +1,6 @@
+import "jest";
 import {deleteTempFolder} from "../utils/deleteTempFolder";
 
-declare let jasmine: any, describe: any, expect: any, it: any;
 import {saveJSON, loadJSON, deleteFile, getPath, getFilename, mkdir, isFolderEmpty} from './../../src';
 
 const data: any = {
