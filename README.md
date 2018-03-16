@@ -27,3 +27,7 @@ _more commands later_
 # mkdir(path: string): Promise<void>
 
 Create a directories recursively.
+
+# isFolderEmpty(path: string): Promise<boolean>
+
+Returns true if the folder contains files or sub folders.
