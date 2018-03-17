@@ -274,7 +274,7 @@ var _rmdir = function (directory) {
                 reject({
                     code: 1909272051,
                     section: 'dyna-node-fs/rmdir',
-                    message: "Cannot create directory: [" + directory + "]",
+                    message: "Cannot delete the directory: [" + directory + "]",
                     data: { error: error },
                 });
             }
