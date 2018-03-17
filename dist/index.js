@@ -212,25 +212,73 @@ exports.deleteFile = function (filename) { return __awaiter(_this, void 0, void 
 }); };
 exports.mkdir = function (directory) {
     return new Promise(function (resolve, reject) {
-        try {
-            var sep = '/'; //path.sep;
-            var initDir = path.isAbsolute(directory) ? sep : '';
-            directory.split(sep).reduce(function (parentDir, childDir) {
-                var curDir = path.resolve(parentDir, childDir);
-                if (!fs.existsSync(curDir))
-                    fs.mkdirSync(curDir);
-                return curDir;
-            }, initDir);
-            resolve();
-        }
-        catch (error) {
-            reject({
-                code: 1909272051,
-                section: 'dyna-node-fs/mkdir',
-                message: "Cannot create directory: [" + directory + "]",
-                data: { error: error },
-            });
-        }
+        setTimeout(function () {
+            try {
+                var sep = '/'; //path.sep;
+                var initDir = path.isAbsolute(directory) ? sep : '';
+                directory.split(sep).reduce(function (parentDir, childDir) {
+                    var curDir = path.resolve(parentDir, childDir);
+                    if (!fs.existsSync(curDir))
+                        fs.mkdirSync(curDir);
+                    return curDir;
+                }, initDir);
+                resolve();
+            }
+            catch (error) {
+                reject({
+                    code: 1909282052,
+                    section: 'dyna-node-fs/mkdir',
+                    message: "Cannot create directory: [" + directory + "]",
+                    data: { error: error },
+                });
+            }
+        }, 0);
+    });
+};
+exports.rmdir = function (directory) {
+    return exports.exists(directory)
+        .then(function (exists) {
+        if (!exists)
+            return Promise.resolve();
+        return _rmdir(directory);
+    });
+};
+var _rmdir = function (directory) {
+    // based in: https://stackoverflow.com/questions/31917891/node-how-to-remove-a-directory-if-exists
+    return new Promise(function (resolve, reject) {
+        setTimeout(function () {
+            try {
+                var removeADir_1 = function (directory) {
+                    var list = fs.readdirSync(directory);
+                    for (var i = 0; i < list.length; i++) {
+                        var filename = path.join(directory, list[i]);
+                        var stat = fs.statSync(filename);
+                        if (filename == "." || filename == "..") {
+                            // pass these files
+                        }
+                        else if (stat.isDirectory()) {
+                            // rmdir recursively
+                            removeADir_1(filename);
+                        }
+                        else {
+                            // rm filename
+                            fs.unlinkSync(filename);
+                        }
+                    }
+                    fs.rmdirSync(directory);
+                };
+                removeADir_1(directory);
+                resolve();
+            }
+            catch (error) {
+                reject({
+                    code: 1909272051,
+                    section: 'dyna-node-fs/rmdir',
+                    message: "Cannot create directory: [" + directory + "]",
+                    data: { error: error },
+                });
+            }
+        }, 0);
     });
 };
 exports.isFolderEmpty = function (directory) {
