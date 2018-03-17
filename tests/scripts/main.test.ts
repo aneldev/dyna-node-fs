@@ -79,8 +79,7 @@ describe('Empty folder check', () => {
   const testEmptyFolderFile: string = testEmptyFolder + '/test-file-with-data.json';
 
   it('should clean up from previous', (done: Function) => {
-    deleteTempFolder();
-    done();
+    deleteTempFolder(done);
   });
   it('should create a new temp folder', (done: Function) => {
     mkdir(testEmptyFolder)
@@ -145,8 +144,7 @@ describe('Empty folder check', () => {
       });
   });
   it('should delete the temp folder', (done: Function) => {
-    deleteTempFolder();
-    done();
+    deleteTempFolder(done);
   });
   it('should return error since the folder doesn\'t exist', (done: Function) => {
     isFolderEmpty(testEmptyFolder)
@@ -167,8 +165,7 @@ describe('Delete folder', () => {
   const testEmptyFolderFile: string = testEmptyFolder + '/test-file-with-data.json';
 
   it('should clean up from previous', (done: Function) => {
-    deleteTempFolder();
-    done();
+    deleteTempFolder(done);
   });
   it('should not find the test folder (since is not yet created)', (done: Function) => {
     exists(testEmptyFolder)
@@ -243,8 +240,7 @@ describe('Delete folder', () => {
       });
   });
   it('should delete the temp folder', (done: Function) => {
-    deleteTempFolder();
-    done();
+    deleteTempFolder(done);
   });
   it('should return error since the folder doesn\'t exist', (done: Function) => {
     isFolderEmpty(testEmptyFolder)

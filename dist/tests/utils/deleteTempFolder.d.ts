@@ -1,1 +1,1 @@
-export declare const deleteTempFolder: () => void;
+export declare const deleteTempFolder: (done: Function) => void;

@@ -125,15 +125,22 @@ export const mkdir = (directory: string): Promise<void> => {
       }
     }, 0);
   });
-
 };
 
 export const rmdir = (directory: string): Promise<void> => {
+  return exists(directory)
+    .then((exists:boolean)=>{
+      if (!exists) return Promise.resolve();
+      return _rmdir(directory);
+    })
+};
+
+const _rmdir = (directory: string): Promise<void> => {
   // based in: https://stackoverflow.com/questions/31917891/node-how-to-remove-a-directory-if-exists
   return new Promise((resolve: Function, reject: (error: IError) => void) => {
     setTimeout(() => {
       try {
-        const _rmdir = (directory: string): void => {
+        const removeADir = (directory: string): void => {
           const list = fs.readdirSync(directory);
           for (let i = 0; i < list.length; i++) {
             const filename: string = path.join(directory, list[i]);
@@ -144,7 +151,7 @@ export const rmdir = (directory: string): Promise<void> => {
             }
             else if (stat.isDirectory()) {
               // rmdir recursively
-              _rmdir(filename);
+              removeADir(filename);
             }
             else {
               // rm filename
@@ -153,7 +160,7 @@ export const rmdir = (directory: string): Promise<void> => {
           }
           fs.rmdirSync(directory);
         };
-        _rmdir(directory);
+        removeADir(directory);
         resolve();
       } catch (error) {
         reject({
