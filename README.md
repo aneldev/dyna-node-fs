@@ -2,6 +2,8 @@
 
 Basic node.js file actions that return Promises.
 
+No dependencies, can fit easy with universal projects.
+
 Written in Typescript, runs everywhere.
 
 # Methods
@@ -27,6 +29,10 @@ _more commands later_
 # mkdir(path: string): Promise<void>
 
 Create a directories recursively.
+
+# rmdir(path: string): Promise<void>
+
+Deletes a directory with all contents of it.
 
 # isFolderEmpty(path: string): Promise<boolean>
 

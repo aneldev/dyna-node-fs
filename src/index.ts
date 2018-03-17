@@ -105,23 +105,65 @@ export const deleteFile = async (filename: string): Promise<boolean> => {
 
 export const mkdir = (directory: string): Promise<void> => {
   return new Promise((resolve: Function, reject: (error: IError) => void) => {
-    try {
-      const sep = '/'; //path.sep;
-      const initDir = path.isAbsolute(directory) ? sep : '';
-      directory.split(sep).reduce((parentDir, childDir) => {
-        const curDir = path.resolve(parentDir, childDir);
-        if (!fs.existsSync(curDir)) fs.mkdirSync(curDir);
-        return curDir;
-      }, initDir);
-      resolve();
-    } catch (error) {
-      reject({
-        code: 1909272051,
-        section: 'dyna-node-fs/mkdir',
-        message: `Cannot create directory: [${directory}]`,
-        data: {error},
-      });
-    }
+    setTimeout(() => {
+      try {
+        const sep = '/'; //path.sep;
+        const initDir = path.isAbsolute(directory) ? sep : '';
+        directory.split(sep).reduce((parentDir, childDir) => {
+          const curDir = path.resolve(parentDir, childDir);
+          if (!fs.existsSync(curDir)) fs.mkdirSync(curDir);
+          return curDir;
+        }, initDir);
+        resolve();
+      } catch (error) {
+        reject({
+          code: 1909282052,
+          section: 'dyna-node-fs/mkdir',
+          message: `Cannot create directory: [${directory}]`,
+          data: {error},
+        });
+      }
+    }, 0);
+  });
+
+};
+
+export const rmdir = (directory: string): Promise<void> => {
+  // based in: https://stackoverflow.com/questions/31917891/node-how-to-remove-a-directory-if-exists
+  return new Promise((resolve: Function, reject: (error: IError) => void) => {
+    setTimeout(() => {
+      try {
+        const _rmdir = (directory: string): void => {
+          const list = fs.readdirSync(directory);
+          for (let i = 0; i < list.length; i++) {
+            const filename: string = path.join(directory, list[i]);
+            const stat = fs.statSync(filename);
+
+            if (filename == "." || filename == "..") {
+              // pass these files
+            }
+            else if (stat.isDirectory()) {
+              // rmdir recursively
+              _rmdir(filename);
+            }
+            else {
+              // rm filename
+              fs.unlinkSync(filename);
+            }
+          }
+          fs.rmdirSync(directory);
+        };
+        _rmdir(directory);
+        resolve();
+      } catch (error) {
+        reject({
+          code: 1909272051,
+          section: 'dyna-node-fs/rmdir',
+          message: `Cannot create directory: [${directory}]`,
+          data: {error},
+        });
+      }
+    }, 0);
   });
 };
 
