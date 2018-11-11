@@ -44,13 +44,14 @@
     "test-publish-push": "npm test && npm version patch && npm publish && git push && git push --tags",
     "clear-npm-cache": "npm cache clear --force",
     "update-release": "npm update && git add -u && git add -A && git commit -m \"last minute update-release changes\"; npm run release",
-    "reinstall": "rm ./package-lock.json; rm -rf ./node_modules; npm install"
+    "reinstall": "rm ./package-lock.json; rm -rf ./node_modules; npm install",
+    "reinstall-dyna": "rm ./package-lock.json; rm -rf ./node_modules/dyna-*; npm install"
   },
   "keywords": [],
   "author": "Anel dev",
   "license": "MIT",
   "dependencies": {
-    "dyna-interfaces": "^1.0.2"
+    "dyna-interfaces": "^4.0.0"
   },
   "devDependencies": {
     "@types/jest": "^20.0.8",
